@@ -67,8 +67,11 @@ function createMenu(items) {
   divs.forEach(divEl => {
     divEl.addEventListener("click", e => {
       e.stopPropagation();
+      const liList = [...document.querySelectorAll("li")];
+
       if (
         !e.target.classList.contains("menu") &&
+        !liList.includes(e.target) &&
         div.classList.contains("menu--open")
       ) {
         TweenMax.fromTo(div, 0.5, { left: "0px" }, { left: "-350px" });
@@ -84,11 +87,3 @@ function createMenu(items) {
 
 const header = document.querySelector(".header");
 header.append(createMenu(menuItems));
-
-const divs = document.querySelectorAll("div");
-divs.forEach(div => {
-  div.addEventListener("click", e => {
-    if (!e.target.classList.contains("menu")) {
-    }
-  });
-});
