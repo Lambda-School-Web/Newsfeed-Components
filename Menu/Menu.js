@@ -1,12 +1,12 @@
 /* This is the data we will be using, study it but don't change anything, yet. */
 
 let menuItems = [
-  'Students',
-  'Faculty',
+  "Students",
+  "Faculty",
   "What's New",
-  'Tech Trends',
-  'Music',
-  'Log Out'
+  "Tech Trends",
+  "Music",
+  "Log Out"
 ];
 
 /* 
@@ -33,3 +33,62 @@ let menuItems = [
   Step 6: add the menu component to the DOM.
   
 */
+
+function createMenu(items) {
+  const div = document.createElement("div");
+  const ul = document.createElement("ul");
+  let li = null;
+
+  items.forEach(item => {
+    li = document.createElement("li");
+    li.textContent = item;
+    ul.append(li);
+  });
+
+  div.append(ul);
+
+  div.classList.add("menu");
+
+  const menuImg = document.querySelector(".menu-button");
+  menuImg.addEventListener("click", e => {
+    e.stopPropagation();
+    if (div.classList.contains("menu--open")) {
+      TweenMax.fromTo(div, 0.5, { left: "0" }, { left: "-350px" });
+      setTimeout(function() {
+        div.classList.toggle("menu--open");
+      }, 500);
+    } else {
+      div.classList.toggle("menu--open");
+      TweenMax.fromTo(div, 1, { left: "-350px" }, { left: "0px" });
+    }
+  });
+
+  const divs = document.querySelectorAll("div");
+  divs.forEach(divEl => {
+    divEl.addEventListener("click", e => {
+      e.stopPropagation();
+      if (
+        !e.target.classList.contains("menu") &&
+        div.classList.contains("menu--open")
+      ) {
+        TweenMax.fromTo(div, 0.5, { left: "0px" }, { left: "-350px" });
+        setTimeout(function() {
+          div.classList.toggle("menu--open");
+        }, 500);
+      }
+    });
+  });
+
+  return div;
+}
+
+const header = document.querySelector(".header");
+header.append(createMenu(menuItems));
+
+const divs = document.querySelectorAll("div");
+divs.forEach(div => {
+  div.addEventListener("click", e => {
+    if (!e.target.classList.contains("menu")) {
+    }
+  });
+});
